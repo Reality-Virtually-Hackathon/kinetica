@@ -19,6 +19,8 @@ namespace Kinetica
 
         private List<float> m_performanceDataLeft;
         private List<float> m_performanceDataRight;
+
+        private int m_exerciseNumber = 1;
         //---------------------------------------------
 
         //---------------------------------------------
@@ -62,9 +64,10 @@ namespace Kinetica
                 yield return null;
 
             m_coroutineInProgress = true;
+
             string json = "{\"user_name\":\"" + m_user +"\"}";
             byte[] bodyRaw = Encoding.UTF8.GetBytes(json);
-            using (UnityWebRequest www = new UnityWebRequest("https://kinetica-vr.appspot.com/brownie", "POST"))
+            using (UnityWebRequest www = new UnityWebRequest(SERVER + m_user, "POST"))
             {
                 www.SetRequestHeader("Content-Type", "application/json");
                 www.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
@@ -73,7 +76,7 @@ namespace Kinetica
                 if (www.isNetworkError || www.isHttpError)
                 {
                     Debug.Log(www.error);
-                    Debug.Log(www.downloadHandler.text);
+                    //Debug.Log(www.downloadHandler.text);
                 }
                 else
                 {
@@ -94,8 +97,11 @@ namespace Kinetica
 
             m_coroutineInProgress = true;
 
-            string json = JsonUtility.ToJson(m_performanceDataLeft);
-            using (UnityWebRequest www = UnityWebRequest.Put(SERVER, json))
+            string json = "{\"Exercise " 
+                + m_exerciseNumber 
+                + "_Left\":\""
+                + JsonUtility.ToJson(m_performanceDataLeft.ToArray()) + "\"}";
+            using (UnityWebRequest www = UnityWebRequest.Put(SERVER + m_user, json))
             {
                 www.SetRequestHeader("Content-Type", "application/json");
                 yield return www.Send();
@@ -111,8 +117,11 @@ namespace Kinetica
                 }
             }
 
-            json = JsonUtility.ToJson(m_performanceDataRight);
-            using (UnityWebRequest www = UnityWebRequest.Put(SERVER, json))
+            json = "{\"Exercise "
+                + m_exerciseNumber
+                + "_Right\":\""
+                + JsonUtility.ToJson(m_performanceDataRight.ToArray()) + "\"}";
+            using (UnityWebRequest www = UnityWebRequest.Put(SERVER + m_user, json))
             {
                 www.SetRequestHeader("Content-Type", "application/json");
                 yield return www.Send();
@@ -127,6 +136,8 @@ namespace Kinetica
                     Debug.Log(www.responseCode);
                 }
             }
+
+            m_exerciseNumber++;
 
             m_coroutineInProgress = false;
         }
@@ -141,8 +152,12 @@ namespace Kinetica
 
             m_coroutineInProgress = true;
 
-            string json = "{\"heart_rate\":" + heartRate + "}";
-            using (UnityWebRequest www = UnityWebRequest.Put(SERVER, json))
+            string json = "{\"heart_rate " 
+                + Time.time 
+                + "\":\"" 
+                + heartRate 
+                + "\"}";
+            using (UnityWebRequest www = UnityWebRequest.Put(SERVER + m_user, json))
             {
                 www.SetRequestHeader("Content-Type", "application/json");
                 yield return www.Send();
