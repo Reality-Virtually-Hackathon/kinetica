@@ -31,7 +31,7 @@ mongodb.MongoClient.connect(uri, (err, db_) => {
     response.sendStatus(200);
   });
 
-  app.get('/users/:username', (request, response) => {
+  app.get('/:username', (request, response) => {
     db.collection('users', {strict : true}, (err, users) => {
       if (err) {
         response.set('Content-Type', 'text/plain');
@@ -56,16 +56,41 @@ mongodb.MongoClient.connect(uri, (err, db_) => {
     });
   });
 
-  // app.post('/', (request, response) => {
-  //   db.collection('users', {strict : true}, (err, users) => {
-  //     (users.find({user_name : request.body.username}).toArray((err, result) => {
-  //       if (result.length == 1) {
-  //       }
-  //     })) 
-  //     let newUser = request.body;
-  //     users.insert()
-  //   });
-  // });
+  app.post('/:username', (request, response) => {
+    db.collection('users', {strict : true}, (err, users) => {
+      (users.find({user_name : request.params.username}).toArray((err, result) => {
+        if (result.length == 1) {
+          response.sendStatus(400);
+          return;
+        }
+        users.insert(request.body, (err, result) => {
+          if (err) {
+            response.status(400).send(err);
+          }
+          else {
+            response.sendStatus(200);
+          }
+        });
+      })) 
+    });
+  });
+
+  app.patch('/:username', (request, response) => {
+    db.collection('users', {strict : true}, (err, users) => {
+      (users.find({user_name : request.params.username}).toArray((err, result) => {
+        if (result.length == 1) {
+          users.updateOne({user_name : request.params.username}, { $set: request.body }, (err, result) => {
+            if (err) {
+              response.status(400).send(err);
+            }
+            else {
+              response.sendStatus(200);
+            }
+          });
+        }
+      })) 
+    });
+  });
 });
 
 app.listen(8080, () => {
