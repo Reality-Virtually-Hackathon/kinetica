@@ -58,41 +58,77 @@ mongodb.MongoClient.connect(uri, (err, db_) => {
 
   app.post('/:username', (request, response) => {
     db.collection('users', {strict : true}, (err, users) => {
-      (users.find({user_name : request.params.username}).toArray((err, result) => {
+      if (err) {
+        sendError(response, err, 404);
+        return;
+      }
+
+      users.find({user_name : request.params.username}).toArray((err, result) => {
         if (result.length == 1) {
           response.sendStatus(400);
           return;
         }
         users.insert(request.body, (err, result) => {
           if (err) {
-            response.status(400).send(err);
+            sendError(response, err, 400);
           }
           else {
             response.sendStatus(200);
           }
         });
-      })) 
+      });
     });
   });
 
-  app.patch('/:username', (request, response) => {
+  app.put('/:username', (request, response) => {
     db.collection('users', {strict : true}, (err, users) => {
-      (users.find({user_name : request.params.username}).toArray((err, result) => {
+      if (err) {
+        sendError(response, err, 404);
+        return;
+      }
+
+      users.find({user_name : request.params.username}).toArray((err, result) => {
+        if (err) {
+          sendError(response, err, 404);
+          return;
+        }
+
+        if (result.length == 0) {
+          response.sendStatus(400);
+          return;
+        }
+
         if (result.length == 1) {
           users.updateOne({user_name : request.params.username}, { $set: request.body }, (err, result) => {
             if (err) {
-              response.status(400).send(err);
+              sendError(response, err, 400);
             }
             else {
               response.sendStatus(200);
             }
           });
         }
-      })) 
+      });
     });
+  });
+
+  app.delete('/:username', (request, response) => {
+    db.collection('users', {strict : true}, (err, users) => {
+      if (err) {
+        sendError(response, err, 404);
+        return;
+      }
+      users.remove({user_name : request.params.username});
+      response.sendStatus(200);
+    })
   });
 });
 
 app.listen(8080, () => {
   console.log('Listening on port 8080');
 });
+
+function sendError(response, err, statusCode) {
+  response.set('Content-Type', 'text/plain');
+  response.status(statusCode).send(err);
+}
