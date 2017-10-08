@@ -38,6 +38,7 @@ sysinfo.txt
 *.fbx
 *.wav
 *.png
+*.mp3
 
 Old Scripts
 .DS_Store
