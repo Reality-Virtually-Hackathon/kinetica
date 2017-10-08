@@ -408,7 +408,7 @@ Transform:
   m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
   m_Children: []
   m_Father: {fileID: 4467603164549116}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4292876788772642
 Transform:
@@ -421,7 +421,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 4467603164549116}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4341382550862700
 Transform:
@@ -434,7 +434,7 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 4467603164549116}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4400066988557224
 Transform:
@@ -447,7 +447,7 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 4688081511481268}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4402274057771228
 Transform:
@@ -488,7 +488,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 4688081511481268}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4426711704008908
 Transform:
@@ -515,9 +515,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4292876788772642}
   - {fileID: 4341382550862700}
   - {fileID: 4246702357012080}
+  - {fileID: 4292876788772642}
   m_Father: {fileID: 4487590508405360}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -576,9 +576,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4424494374939374}
   - {fileID: 4400066988557224}
   - {fileID: 4949110084448586}
+  - {fileID: 4424494374939374}
   m_Father: {fileID: 4487590508405360}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -634,7 +634,7 @@ Transform:
   m_LocalScale: {x: 0.099999994, y: 0.099999994, z: 0.099999994}
   m_Children: []
   m_Father: {fileID: 4688081511481268}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4965874909866380
 Transform:
@@ -1586,16 +1586,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c09c528608a7dec49a005086b4ec0d84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerTrackedHead: {fileID: 1956045338677866}
   m_leftController:
     controllerGO: {fileID: 1574622982495770}
     trackedObj: {fileID: 114659428544743658}
   m_rightController:
     controllerGO: {fileID: 1187111203297024}
     trackedObj: {fileID: 114612848374466122}
-  m_avatarHead: {fileID: 1550443441806162}
-  m_avatarLeftHand: {fileID: 1957058856320138}
-  m_avatarRightHand: {fileID: 1548548247474744}
+  m_trackedAvatarObjects:
+  - sourceObjects:
+    - {fileID: 1574622982495770}
+    - {fileID: 1187111203297024}
+    - {fileID: 1956045338677866}
+    avatarObjects:
+    - {fileID: 1957058856320138}
+    - {fileID: 1548548247474744}
+    - {fileID: 1550443441806162}
 --- !u!114 &114889055005058804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1658,16 +1663,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de43bcc0973e6ce42906adf928cd3a9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerTrackedHead: {fileID: 1956045338677866}
   m_leftController:
     controllerGO: {fileID: 1574622982495770}
     trackedObj: {fileID: 114659428544743658}
   m_rightController:
     controllerGO: {fileID: 1187111203297024}
     trackedObj: {fileID: 114612848374466122}
-  m_avatarHead: {fileID: 1619910293601432}
-  m_avatarLeftHand: {fileID: 1370187666880924}
-  m_avatarRightHand: {fileID: 1595837961093570}
+  m_trackedAvatarObjects:
+  - sourceObjects:
+    - {fileID: 1574622982495770}
+    - {fileID: 1187111203297024}
+    - {fileID: 1956045338677866}
+    avatarObjects:
+    - {fileID: 1370187666880924}
+    - {fileID: 1595837961093570}
+    - {fileID: 1619910293601432}
 --- !u!124 &124105485228532998
 Behaviour:
   m_ObjectHideFlags: 1

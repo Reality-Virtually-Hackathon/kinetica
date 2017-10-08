@@ -25,13 +25,13 @@ namespace Kinetica
             if (m_leftTriggerDown)
             {
                 // holding left trigger
-                Debug.Log("Left trigger held!");
+                //Debug.Log("Left trigger held!");
             }
 
             if (m_rightTriggerDown)
             {
                 // holding right trigger
-                Debug.Log("Right trigger held!");
+                //Debug.Log("Right trigger held!");
             }
         }
         //---------------------------------------------
@@ -43,7 +43,7 @@ namespace Kinetica
             //Debug.Log("InstructorController.LeftInputs");
             if (device.GetPressDown(SteamVR_Controller.ButtonMask.Trigger))
             {
-                Debug.Log("Left trigger pressed");
+                //Debug.Log("Left trigger pressed");
                 if (!m_leftTriggerDown)
                 {
                     // Start trace
@@ -58,7 +58,7 @@ namespace Kinetica
             {
                 if (m_leftTriggerDown)
                 {
-                    Debug.Log("Left trigger released");
+                    //Debug.Log("Left trigger released");
                     // end trace
                     if (null != ServerManager.singleton)
                     {
