@@ -10,10 +10,15 @@ namespace Kinetica
     {
         public static LocalGameManager singleton = null;
 
+        [Header("Debug settings")]
+        public string localUsername = "Test";
+
         //---------------------------------------------
         [Header("Network spawn points")]
         [SerializeField] private GameObject m_instructorSpawnPoint;
         [SerializeField] private GameObject[] m_studentSpawnPoints;
+
+        private bool m_trackMovement = false;
         //---------------------------------------------
 
 
@@ -46,6 +51,22 @@ namespace Kinetica
         //---------------------------------------------
         {
             return m_studentSpawnPoints;
+        }
+        //---------------------------------------------
+
+        //---------------------------------------------
+        public void EnableMovementTracking(bool enabled)
+        //---------------------------------------------
+        {
+            m_trackMovement = enabled;
+        }
+        //---------------------------------------------
+
+        //---------------------------------------------
+        public bool TrackingMovement()
+        //---------------------------------------------
+        {
+            return m_trackMovement;
         }
         //---------------------------------------------
     }

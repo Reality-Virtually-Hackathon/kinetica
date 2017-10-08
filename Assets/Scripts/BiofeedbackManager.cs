@@ -14,6 +14,8 @@ namespace Kinetica
         private const int HR_LOW_BOUND = 50;
         private const int HR_HIGH_BOUND = 180;
 
+        private DataManager m_dataManager;
+
         private int m_minHeartRate = 80;
         private int m_maxHeartRate = 120;
         private int m_averageHeartRate;
@@ -28,19 +30,33 @@ namespace Kinetica
         private void OnEnable()
         //---------------------------------------------
         {
-            m_currentHeartRate = Random.Range(m_minHeartRate, m_maxHeartRate);
+            m_currentHeartRate = Random.Range(
+                m_minHeartRate, m_maxHeartRate);
         }
         //---------------------------------------------
+
+        private void Start()
+        {
+            m_dataManager = FindObjectOfType<DataManager>();
+        }
 
         //---------------------------------------------
         private void Update()
         //---------------------------------------------
         {
             if (0f < m_timeToUpdate)
+            {
+                m_timeToUpdate -= Time.deltaTime;
                 return;
+            }
 
             DetermineCurrentHeartRate();
             UpdateStatistics();
+
+            if (m_dataManager != null)
+            {
+                m_dataManager.ExportHeartRate(m_currentHeartRate);
+            }
 
             m_timeToUpdate = HR_UPDATE_RATE;
         }
@@ -79,6 +95,14 @@ namespace Kinetica
         //---------------------------------------------
         {
             return m_currentHeartRate;
+        }
+        //---------------------------------------------
+
+        //---------------------------------------------
+        public int AverageHeartRate()
+        //---------------------------------------------
+        {
+            return m_averageHeartRate;
         }
         //---------------------------------------------
 

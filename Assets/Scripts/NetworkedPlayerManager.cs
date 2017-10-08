@@ -151,8 +151,9 @@ namespace Kinetica
                 return;
 
             GameObject instructorGO = ClientScene.FindLocalObject(instructorId);
-
             m_instructorGhost.EnableGhostFollow(instructorGO);
+
+            LocalGameManager.singleton.EnableMovementTracking(true);
         }
         //---------------------------------------------
 
@@ -167,8 +168,9 @@ namespace Kinetica
                 return;
 
             GameObject instructorGO = ClientScene.FindLocalObject(instructorId);
-
             m_instructorGhost.DisableGhostFollow();
+
+            LocalGameManager.singleton.EnableMovementTracking(false);
         }
         //---------------------------------------------
     }
