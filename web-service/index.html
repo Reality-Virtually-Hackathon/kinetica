@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Kinetica</title>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous">
+    </script>
+  </head>
+  <body>
+    <label>User Name:</label>
+    <input type="text" id="user">
+    <button id="submit">Submit</button>
+    <p></p>
+    <div id="user-data"></div>
+    <script>
+      $(document).ready(function() {
+        $("#submit").click( function() {
+          $("#user-data").empty();
+          let username = $("#user").val().trim();
+          $.get(`https://kinetica-vr.appspot.com/${username}`, function() {}, "json")
+           .done(function(user) {
+             console.log(user);
+             let keys = Object.keys(user);
+             for (index in keys) {
+               let key = keys[index];
+               if (key != "_id") {
+                 $("#user-data").append(`${key} : ${user[key]}<br/>`);
+               }
+             }
+           });
+        });
+      });
+    </script>
+  </body>
+</html>

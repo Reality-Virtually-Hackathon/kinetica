@@ -28,7 +28,7 @@ mongodb.MongoClient.connect(uri, (err, db_) => {
   db = db_;
 
   app.get('/', (request, response) => {
-    response.sendStatus(200);
+    response.sendFile(__dirname + '/index.html');
   });
 
   app.get('/:username', (request, response) => {
