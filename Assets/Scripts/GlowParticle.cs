@@ -19,20 +19,17 @@ public class GlowParticle : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+        
         if (other.CompareTag("Player"))
         {
+            Debug.Log("collision happened");
             //instantiate fireEffect prefab
             Vector3 gemPos = this.transform.position;
             Instantiate(fireEffect, gemPos, Quaternion.identity);
-            //Destroy(fireEffect, 5);
+            
+            Destroy(fireEffect, 1);
         }
 
     }
 
-    /*
-    void OnTriggerExit(Collider other)
-    {
-        
-    }
-    */
 }
